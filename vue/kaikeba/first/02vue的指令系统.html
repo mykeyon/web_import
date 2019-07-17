@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<style>
+    .box{
+        width: 300px;
+        height: 300px;
+        background: cyan;
+    }
+    .active{
+        background-color: #248aff;
+    }
+</style>
+<body>
+    <div id = "app"></div>
+</body>
+<script src="./node_modules/vue/dist/vue.js" charset="utf-8"></script>
+<script type="text/javascript">
+    /**
+        创建实例对象
+        双大括号插值 {{}}
+        v-text      innerText
+        v-html      innerHTML
+        v-if        数据属性对应的值，如果为假则不再页面中渲染反之亦然   appendChild() removeChild()
+        v-show      控制dom元素的显示隐藏display: none | block
+        v-bind      绑定标签属性(内置属性和自定义属性)
+        v-on:原生的实际名 = "函数名"
+        v-for = "(item, index) in meanList"     
+    */
+    new Vue({
+        el: "#app",
+        data: function(){
+            return{
+                msg: '指令系统',
+                isCyan: true,
+                meanList: [
+                    {id: 1, name: "大腰子", prick: 15},
+                    {id: 2, name: "宫保鸡丁", prick: 13},
+                    {id: 3, name: "炒饼子", prick: 20}
+                ],
+                person: {
+                    name: "狗娃",
+                    age: 22
+                }
+            }
+        },
+        template: `
+            <div>
+                <h2>{{ msg }}</h2>
+                <p v-text = "msg"></p>
+                <div class = "box" v-bind:class = "{active: !isCyan}" @click = "clickHandler"></div>   <!-- @click = "isCyan = !isCyan" -->
+                <ul>
+                    <li v-for = "item in meanList">
+                        {{ item.id }} --- {{ item.name }} --- {{ item.prick }}
+                    </li>
+                </ul>
+                <div v-for = "(key, value) in person">
+                    {{ key }}  --- {{ value }}
+                </div>
+            </div>
+        `,
+        methods: {
+            clickHandler(){
+                this.isCyan = !this.isCyan
+            }
+        }
+    })
+</script>
+</html>

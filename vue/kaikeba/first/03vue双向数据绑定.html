@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- v-model 双向数据绑定的体现，指挥体现在UI控件中，只能应用在又value属性的 -->
+        <!-- <input type="text" v-model = "msg"> -->
+        <input type="text" :value = "msg" @input = "valueChange" />
+        <div>{{ msg }}</div>
+    </div>
+</body>
+<script src="./node_modules/vue/dist/vue.js" charset="utf-8"></script>
+<script type="text/javascript">
+    new Vue({
+        el: "#app",
+        data(){
+            return{
+                msg: "狗娃"
+            }
+        },
+        methods: {
+            valueChange(e){
+                this.msg = e.target.value;
+            }
+        }
+    })
+</script>
+</html>
