@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+<script src="../first/node_modules/vue/dist/vue.js" charset="utf-8"></script>
+<script type="text/javascript">
+    //全局组件
+    Vue.component('Vbtn',{
+        template: `
+            <button>按钮</button>
+        `
+    })
+    var Vheader = {
+        template: `
+            <div>我是头部组件</div>
+        `
+    }
+    var Vaside = {
+        template: `
+            <div>我是侧边栏组件</div>
+        `
+    }
+    var Vcontent = {
+        template: `
+            <div>我是内容区<Vbtn /></div>
+        `
+    }
+    var App = {
+        data(){
+            return{
+                msg: "我是App主入口文件"
+            }
+        },
+        components: {
+            Vheader,
+            Vaside,
+            Vcontent
+        },
+        template: `
+            <div>
+                <Vheader />
+                <div>
+                    <Vaside />
+                    <Vcontent />
+                </div>
+                <Vbtn />
+            </div>
+        `
+    }
+    new Vue({
+        el: "#app",
+        data(){
+            return{
+                msg: "Hello"
+            }
+        },
+        components: {
+            App
+        },
+        template: `
+            <App />
+        `
+    })
+</script>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+<script src="../first/node_modules/vue/dist/vue.js" charset="utf-8"></script>
+<script type="text/javascript">
+    /**
+        子组件往父组件传值
+            1.在父组件绑定自定义的事件
+            2.在子组件中触发原生的事件在函数中使用$emit触发自定义的childHandler
+
+    **/
+    Vue.component("Parent", {
+        data() {
+            return {
+                msg: "我是父组件传向子组件的数据"
+            }
+        },
+        template: `
+            <div>
+                <h1>我是父组件</h1>
+                <p>{{ msg }}</p>
+                <Child :ChildData = "msg" @childHandler = 'childHandler'/>
+            </div>
+        `,
+        methods: {
+            childHandler(val) {
+               console.log(val);
+            }
+        }
+    })
+    Vue.component("Child", {
+        data() {
+            return {
+
+            }
+        },
+        props: ["ChildData"],
+        template: `
+            <div>
+                <h3>我是子组件的</h3>
+                <input type="text" v-model = "ChildData" @input = "changeValue(ChildData)" />
+            </div>
+        `,
+        methods: {
+            changeValue(val) {
+                //在函数中通过$emit触发父组件的事件
+                //$emit(自定义的事件名，消息)
+                this.$emit('childHandler', val)
+            }
+        }
+    })
+    var App = {
+        template: `
+            <Parent />
+        `
+    }
+    new Vue({
+        el: '#app',
+        components: {
+            App
+        },
+        template: `
+            <App />
+        `
+    })
+</script>
+
+</html>

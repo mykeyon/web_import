@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+<script src="../first/node_modules/vue/dist/vue.js" charset="utf-8"></script>
+<script type="text/javascript">
+        //父组件传值到子组件
+    //1.父组件往子组件传值：在父组件中绑定自定义的属性
+    //2.在子组件中使用props接收父组件的传递的数据
+    //3.接收后就可以在子组件中任意使用
+    Vue.component("Parent",{
+        data(){
+          return{
+              msg: "我是父组件传往自组件的数据"
+          }
+        },
+        template: `
+            <div>
+                <p>我是一个父标签</p>
+                <Child :childData = 'msg'/>
+            </div>
+        `
+    })
+    Vue.component("Child",{
+        props: ["childData"],
+        template: `
+            <div>
+                <p>我是一个子标签</p>
+                <h3>{{ childData }}</h3>
+            </div>
+        `
+    })
+    var App = {
+        template: `
+            <div>
+                <Parent />
+            </div>
+        `
+    }
+    new Vue({
+        el: "#app",
+        data(){
+            return{
+
+            }
+        },
+        components: {
+            App
+        },
+        template: `
+            <App />
+        `
+    })
+</script>
+</html>
