@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<style>
+    .active{
+        background-color: #248aff;
+    }
+</style>
+<body>
+    <div id="app"></div>
+</body>
+<script src="../first/node_modules/vue/dist/vue.js" charset="utf-8"></script>
+<script type="text/javascript">
+    var musicData = [
+        {
+            id: 1,
+            name: '1',
+            author: '狗娃',
+            songSrc: './../../music/1.mp3'
+        },{
+            id: 2,
+            name: '2',
+            author: '狗剩',
+            songSrc: './../../music/2.mp3'
+        },{
+            id: 3,
+            name: '3',
+            author: '铁蛋',
+            songSrc: './../../music/3.mp3'
+        },{
+            id: 4,
+            name: '4',
+            author: '张三',
+            songSrc: './../../music/4.mp3'
+        },{
+            id: 5,
+            name: '5',
+            author: '李四',
+            songSrc: './../../music/5.mp3'
+        },{
+            id: 6,
+            name: '6',
+            author: '王五',
+            songSrc: './../../music/6.mp3'
+        },
+    ]
+    var App = {
+        data(){
+          return{
+              musicData: musicData,
+              currentIndex: 0
+          }
+        },
+        template: `
+            <div>
+                <audio autoplay controls :src="getCurrentSongSrc"></audio>
+                <ul>
+                    <li v-for = "(item, index) in musicData" :class = "{ active: currentIndex == index}" @click = "clickHandle(index)">
+                        <span>编号：{{ item.id }}</span>
+                        <span>歌手：{{ item.author }}</span>
+                    </li>
+                </ul>
+            </div>
+        `,
+        computed:{
+            //计算属性默认只有get
+          getCurrentSongSrc: function(){
+              return this.musicData[this.currentIndex].songSrc
+          }
+        },
+        methods: {
+            clickHandle(index){
+                this.currentIndex = index;
+            }
+        }
+    }
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+
+            }
+        },
+        components: {
+            App
+        },
+        template: `
+            <App />
+        `
+    })
+</script>
+
+</html>

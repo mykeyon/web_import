@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+<script src="../first/node_modules/vue/dist/vue.js" charset="utf-8"></script>
+<script type="text/javascript">
+    Vue.component("myLi",{
+        template: `
+            <li>
+                预留的第一个坑
+                <slot name = "two"></slot>
+                预留的对二个坑
+                <slot name = "three"></slot>
+            </li>
+        `
+    })
+    var App = {
+        template: `
+            <div>
+                <ul>
+                    <myLi>
+                        <h3 slot = "three">预留的对二个坑</h3>
+                        <h2 slot = "two">预留的第一个坑</h2>
+                    </myLi>
+                </ul>
+            </div>
+        `
+    }
+    new Vue({
+        el: '#app',
+        components: {
+            App
+        },
+        template: `
+            <App />
+        `
+    })
+</script>
+</html>

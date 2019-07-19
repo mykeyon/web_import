@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+<script src="../first/node_modules/vue/dist/vue.js" charset="utf-8"></script>
+<script type="text/javascript">
+    /*
+        总结一句话： watch监听的是单个属性
+        基本的数据类型  简单监视
+        复杂的数据类型  深度监视
+    */
+    new Vue({
+        el: "#app",
+        data(){
+            return{
+                msg: "",
+                stus: [{ name: 'jack' }]
+            }
+        },
+        template: `
+            <div>
+                <input type="text" v-model = "msg" />
+                <h2>{{ msg }}</h2>
+                <button @click = "stus[0].name = '狗娃'">改变</button>
+                <p>{{ stus[0].name }}</p>
+            </div>
+        `,
+        watch: {
+            msg: function(newV, oldV){
+                console.log(newV, oldV);
+                if(newV == "狗娃"){
+                    console.log("狗娃来了");
+                }
+            },
+            //监听复杂数据类型 object array 深度监视
+            stus: {
+                deep: true, //深度监视
+                handler: function(newV, oldV){
+                    console.log(newV[0].name)
+                }
+            }
+        }
+    })
+</script>
+
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    .active{
+        background-color: cyan;
+    }
+</style>
+<body>
+    <div id="app"></div>
+</body>
+<script src="../first/node_modules/vue/dist/vue.js" charset="utf-8"></script>
+<script type="text/javascript">
+    var musicData = [{
+        id: 1,
+        name: '1',
+        author: '狗娃',
+        songSrc: './../../music/1.mp3'
+    }, {
+        id: 2,
+        name: '2',
+        author: '狗剩',
+        songSrc: './../../music/2.mp3'
+    }, {
+        id: 3,
+        name: '3',
+        author: '铁蛋',
+        songSrc: './../../music/3.mp3'
+    }, {
+        id: 4,
+        name: '4',
+        author: '张三',
+        songSrc: './../../music/4.mp3'
+    }, {
+        id: 5,
+        name: '5',
+        author: '李四',
+        songSrc: './../../music/5.mp3'
+    }, {
+        id: 6,
+        name: '6',
+        author: '王五',
+        songSrc: './../../music/6.mp3'
+    }];
+    var App = {
+        data(){
+            return{
+                musicData: musicData,
+                currentIndex: 0
+            }
+        },
+        template: `
+            <div>
+                <audio autoplay controls :src = "getCurrentSongSrc" />
+                <ul>
+                    <li v-for = "(item, index) in musicData " @click = "clickHandler(index)" :class = "{ active: currentIndex == index }">
+                        <span>编号：{{ item.id }}</span>
+                        <span>歌手：{{ item.author }}</span>
+                    </li>
+                </ul>
+            </div>
+        `,
+        computed: {
+            getCurrentSongSrc: {
+                set: function(newV){
+                    this.currentIndex = newV;
+                },
+                get: function(){
+                    return this.musicData[this.currentIndex].songSrc
+                }
+            }
+        },
+        methods: {
+            clickHandler:function(index){
+                console.log(index);
+                this.getCurrentSongSrc = index;
+            }
+        }
+    }
+    new Vue({
+        el: "#app",
+        components: {
+            App
+        },
+        template: `
+            <App />
+        `
+    })
+</script>
+
+</html>
