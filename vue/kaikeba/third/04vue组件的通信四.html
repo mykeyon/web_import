@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+</body>
+<script src="../first/node_modules/vue/dist/vue.js" charset="utf-8"></script>
+<script type="text/javascript">
+    /*
+        父组件中通过provide来提供变量，然后在子组件中通过inject来注入变量。不论子组件
+        有多深，只要调用了indect那么就可以注入provider中的数据。而不是局限于只能从当前
+        父组件的prop属性来获取数据，只要在父组件的声明周期内，子组件都可以调用。
+    */
+    Vue.component('Child',{
+        data(){
+            return{
+                msg: ''
+            }
+        },
+        template: `
+            <div>我是孩子：{{ msg }}</div>
+        `,
+        inject: ['for'],
+        created(){
+            this.msg = this.for;
+        }
+    })
+    Vue.component('Parent',{
+        template: `
+            <div>
+                <p>我是父亲</p>
+                <Child />
+            </div>
+        `
+    })
+    var App = {
+        data(){
+            return{
+
+            }
+        },
+        provide: {
+            for: '它爹'
+        },
+        template: `
+            <div>
+                <h2>我是入口组件</h2>
+                <Parent />
+            </div>
+        `
+    }
+    new Vue({
+        el: '#app',
+        components: {
+            App
+        },
+        template: `
+            <App />
+        `
+    })
+</script>
+</html>

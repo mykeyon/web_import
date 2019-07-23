@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <div id="app"></div>
+    </body>
+    <script src="../first/node_modules/vue/dist/vue.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        /*
+            $attrs 和 listeners
+            第一种方式处理父子组件之间的数据传输有一个问题：如果父组件A下面有子组件B，
+            组件B下面有组件C，这时如果组件A想传递数据给组件C怎么办呢？
+            如果采用第一种方式，我们必须让组件A通过prop传递消息给组件B，组件B再通过
+            prop传递消息给组件C；要是组件A和组件C之间有更多的组件，那采用这种方式就
+            很复杂了。vue2.4开始提供了$attrs 和 $listeners来解决这个问题，能够让组件
+            A之间传递消息给组件C。
+        */
+        Vue.component('C',{
+            data(){
+                return{
+
+                }
+            },
+            template:`
+                <div>
+                    <div @click = "cClickHandler">{{ $attrs.messagec }}</div>
+                </div>
+            `,
+            methods: {
+                cClickHandler(){
+                    console.log('Hello World');
+                }
+            }
+        })
+        Vue.component("B",{
+            data(){
+                return{
+
+                }
+            },
+            template: `
+                <C v-bind = "$attrs" v-on = '$listeners'></C>
+            `,
+            methods:{
+
+            }
+        })
+        Vue.component('A',{
+            data(){
+                return{
+
+                }
+            },
+            props: ['message'],
+            template: `
+                <div>
+                    <B v-bind = "$attrs" v-on = "$listeners"></B>
+                </div>
+            `
+        })
+        var App = {
+            data(){
+                return{
+                    msg: '我是父组件的内容',
+                    message: 'helloc'
+                }
+            },
+            template:`
+                <div>
+                    <p>这是一个父组件</p>
+                    <A :messagec = 'message' v-on:getCData = "getCData"></A>
+                </div>
+            `,
+            methods: {
+                getCData(val){
+                    console.log(val)
+                }
+            }
+        }
+        new Vue({
+            el: '#app',
+            data(){
+                return{
+
+                }
+            },
+            components:{
+                App
+            },
+            template:`
+                <App />
+            `
+        })
+    </script>
+</html>

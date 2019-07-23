@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+</body>
+<script src="../first/node_modules/vue/dist/vue.js" charset="utf-8"></script>
+<script type="text/javascript">
+    Vue.component('subCom',{
+        template: `
+            <div class = "subCom"></div>
+        `
+    })
+    var App = {
+        template: `
+            <div class = 'app' >
+                <button ref = "btn">我是按钮1</button>
+                <subCom ref = 'abc'/>
+            </div>
+        `,
+        created(){
+            console.log(this.$refs.btn)
+        },
+        mounted(){
+            //如果给绑定标签绑定ref = ‘xxx’属性，使用this.$refs.xxx获取原生的jsDom对象
+            //ref属性名不能重名
+            console.log(this.$refs.btn);
+            //如果时给组件绑定ref属性，那么this.refs.XX 获取的时当前组件对象
+            console.log(this.$refs.abc);
+        }
+    }
+    new Vue({
+        el: '#app',
+        data(){
+            return{
+
+            }
+        },
+        components:{
+            App
+        },
+        template: `<App />`
+    })
+</script>
+</html>

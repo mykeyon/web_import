@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+<script src="../first/node_modules/vue/dist/vue.js" charset="utf-8"></script>
+<script src="../first/node_modules/vue-router/dist/vue-router.js" charset="utf-8"></script>
+<script type="text/javascript">
+    /*
+        路由参数
+        1. xxx.html#/user/1    params 动态路由参数
+        2. ooo.html#/user?userId = 1   query
+
+    */
+    var UserParams = {
+        template: `
+            <div>我是用户一</div>
+        `,
+        created(){
+            console.log(this.$router);
+            console.log(this.$route.params.id);
+        }
+    }
+    var UserQuery = {
+        template: `
+            <div>我是用户二</div>
+        `
+    }
+    var router = new VueRouter({
+        routes: [{
+            path: '/user/:id',
+            name: 'userP',
+            component: UserParams
+        },{
+            path: '/user',
+            name: 'userQ',
+            component: UserQuery
+        }]
+    })
+    var App = {
+        template: `
+            <div>
+                <router-link :to = "{name: 'userP', params: {id: 1}}">用户1</router-link>
+                <router-link :to = "{name: 'userQ', query: { userId:2 }}">用户2</router-link>
+                <router-view></router-view>
+            </div>
+        `
+    }
+    new Vue({
+        el: '#app',
+        router,
+        components: {
+            App
+        },
+        template: `
+            <App />
+        `
+    })
+</script>
+</html>
